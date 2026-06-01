@@ -222,6 +222,23 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+    const elements = Array.from(document.querySelectorAll<HTMLElement>(".scroll-fade"));
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          entry.target.classList.toggle("is-visible", entry.isIntersecting);
+        });
+      },
+      { threshold: 0.1, rootMargin: "0px 0px -8% 0px" }
+    );
+
+    elements.forEach((element) => observer.observe(element));
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
     const timer = setInterval(() => {
       setReviewStart((current) => (current + 1) % reviews.length);
     }, 5200);
@@ -237,7 +254,7 @@ export default function Home() {
   const mobileReview = reviews[reviewStart % reviews.length];
 
   return (
-    <main className="min-h-screen overflow-x-hidden bg-[#f7f7f5] text-[#111111]">
+    <main className="min-h-screen overflow-x-clip bg-[#f7f7f5] text-[#111111]">
       <style jsx global>{`
         @keyframes review-slide-in {
           0% {
@@ -251,6 +268,36 @@ export default function Home() {
         }
         .review-slide-in {
           animation: review-slide-in 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+
+        .scroll-fade {
+          opacity: 0;
+          transform: translate3d(0, 18px, 0);
+          transition: opacity 650ms ease, transform 650ms cubic-bezier(0.22, 1, 0.36, 1);
+          will-change: opacity, transform;
+        }
+
+        .scroll-fade.is-visible {
+          opacity: 1;
+          transform: translate3d(0, 0, 0);
+        }
+
+        @media (min-width: 768px) {
+          .scroll-fade {
+            transform: translate3d(0, 24px, 0);
+          }
+
+          .scroll-fade.is-visible {
+            transform: translate3d(0, 0, 0);
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .scroll-fade {
+            opacity: 1;
+            transform: none;
+            transition: none;
+          }
         }
       `}</style>
 
@@ -402,7 +449,7 @@ Precision plastering. Clean finishes. Free quotations.</p>
         </div>
       </section>
 
-      <section id="services" className="bg-[#f7f7f5] px-4 py-16 md:px-5 md:py-24">
+      <section id="services" className="scroll-fade bg-[#f7f7f5] px-4 py-16 md:px-5 md:py-24">
         <div className="mx-auto max-w-7xl">
           <div className="mb-12 grid gap-5 md:grid-cols-[0.9fr_1fr] md:items-end">
             <div>
@@ -433,7 +480,7 @@ Precision plastering. Clean finishes. Free quotations.</p>
         </div>
       </section>
 
-      <section id="work" className="bg-white px-4 py-16 md:px-5 md:py-24">
+      <section id="work" className="scroll-fade bg-white px-4 py-16 md:px-5 md:py-24">
         <div className="mx-auto max-w-7xl">
           <div className="mb-12 grid gap-5 md:grid-cols-[0.9fr_1fr] md:items-end">
             <div>
@@ -486,7 +533,7 @@ A selection of our recently completed plastering projects across Manchester and 
         </div>
       </section>
 
-<section className="bg-[#111111] px-4 py-16 text-white md:px-5 md:py-24">
+<section className="scroll-fade bg-[#111111] px-4 py-16 text-white md:px-5 md:py-24">
   <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
     <div>
       <p className="font-semibold uppercase tracking-[0.25em] text-[#c92026]">
@@ -524,7 +571,7 @@ The preparation, the process and the finish. Done properly. </h2>
 </section>
 
 
-      <section id="reviews" className="bg-[#f7f7f5] px-4 py-16 md:px-5 md:py-24">
+      <section id="reviews" className="scroll-fade bg-[#f7f7f5] px-4 py-16 md:px-5 md:py-24">
         <div className="mx-auto max-w-7xl">
           <div className="mb-12 grid gap-5 md:grid-cols-[0.9fr_1fr] md:items-end">
             <div>
@@ -581,7 +628,7 @@ Reviews from your neighbours across the region.              </p>
         </div>
       </section>
 
-      <section className="bg-white px-4 py-16 md:px-5 md:py-24">
+      <section className="scroll-fade bg-white px-4 py-16 md:px-5 md:py-24">
         <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.85fr_1fr]">
           <div>
             <p className="font-semibold uppercase tracking-[0.25em] text-[#c92026]">Why Choose A.W</p>
@@ -610,7 +657,7 @@ Reviews from your neighbours across the region.              </p>
         </div>
       </section>
 
-      <section id="contact" className="bg-[#f7f7f5] px-4 py-16 md:px-5 md:py-24">
+      <section id="contact" className="scroll-fade bg-[#f7f7f5] px-4 py-16 md:px-5 md:py-24">
         <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.8fr_1fr]">
           <div className="bg-[#111111] p-8 text-white md:p-10">
             <p className="font-semibold uppercase tracking-[0.25em] text-[#c92026]">Areas Covered</p>
@@ -675,7 +722,7 @@ Reviews from your neighbours across the region.              </p>
         <WhatsAppIcon className="h-8 w-8" />
       </a>
 
-      <footer className="bg-[#000000] px-4 py-12 text-white md:px-5">
+      <footer className="scroll-fade bg-[#000000] px-4 py-12 text-white md:px-5">
         <div className="mx-auto grid max-w-7xl gap-10 md:grid-cols-[1.2fr_1fr_1fr] md:items-start">
           <div>
 <div className="flex items-center">
