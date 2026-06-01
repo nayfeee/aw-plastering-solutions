@@ -525,14 +525,7 @@ A selection of our recently completed plastering projects across Manchester and 
                     sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                     className="object-cover transition duration-700 ease-out group-hover:scale-[1.035]"
                   />
-                  {index === 0 && (
-                    <>
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/58 via-black/10 to-transparent md:hidden" />
-                      <div className="absolute bottom-4 left-4 border border-white/30 bg-black/55 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-white backdrop-blur md:hidden">
-                        Recent Work
-                      </div>
-                    </>
-                  )}
+                  
                   <div className="absolute inset-0 border border-black/0 transition group-hover:border-[#c92026]" />
                 </div>
               );
