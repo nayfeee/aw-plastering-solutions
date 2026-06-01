@@ -409,7 +409,7 @@ export default function Home() {
           priority
         />
 
-        <div className="absolute inset-0 z-10 bg-gradient-to-b from-black/20 via-black/42 to-black/78 md:bg-gradient-to-r md:from-black/78 md:via-black/42 md:to-black/5" />
+        <div className="absolute inset-0 z-10 bg-gradient-to-b from-black/5 via-black/15 to-black/45 md:bg-gradient-to-r md:from-black/78 md:via-black/42 md:to-black/5" />
 
         <div className="relative z-20 mx-auto flex h-full w-full max-w-7xl px-4 pt-[76px] md:px-6 md:pb-10 md:pt-[165px]">
           <div className="flex h-full w-full items-center">
@@ -497,27 +497,27 @@ A selection of our recently completed plastering projects across Manchester and 
             {galleryImages.map((src, index) => {
               const spanClass =
                 index === 0
-                  ? "md:col-span-2 md:row-span-2"
+                  ? "col-span-2 aspect-[4/3] md:aspect-auto md:col-span-2 md:row-span-2"
                   : index === 1
-                    ? "md:col-span-1 md:row-span-1"
+                    ? "aspect-square md:aspect-auto md:col-span-1 md:row-span-1"
                     : index === 2
-                      ? "md:col-span-1 md:row-span-1"
+                      ? "aspect-square md:aspect-auto md:col-span-1 md:row-span-1"
                       : index === 3
-                        ? "md:col-span-2 md:row-span-2"
+                        ? "col-span-2 aspect-[16/9] md:aspect-auto md:col-span-2 md:row-span-2"
                         : index === 4
-                          ? "md:col-span-1 md:row-span-1"
+                          ? "aspect-square md:aspect-auto md:col-span-1 md:row-span-1"
                           : index === 5
-                            ? "md:col-span-1 md:row-span-1"
+                            ? "aspect-square md:aspect-auto md:col-span-1 md:row-span-1"
                             : index === 6
-                              ? "md:col-span-2 md:row-span-1"
+                              ? "col-span-2 aspect-[5/3] md:aspect-auto md:col-span-2 md:row-span-1"
                               : index === 7
-                                ? "md:col-span-1 md:row-span-1"
+                                ? "aspect-square md:aspect-auto md:col-span-1 md:row-span-1"
                                 : index === 8
-                                  ? "md:col-span-1 md:row-span-1"
-                                  : "md:col-span-2 md:row-span-1";
+                                  ? "aspect-square md:aspect-auto md:col-span-1 md:row-span-1"
+                                  : "col-span-2 aspect-[16/9] md:aspect-auto md:col-span-2 md:row-span-1";
 
               return (
-                <div key={src} className={`group relative min-h-[170px] overflow-hidden bg-[#f7f7f5] ${spanClass}`}>
+                <div key={src} className={`group relative overflow-hidden bg-[#f7f7f5] ${spanClass}`}>
                   <Image
                     src={src}
                     alt={`A.W Plastering Solutions featured project ${index + 1}`}
@@ -525,6 +525,14 @@ A selection of our recently completed plastering projects across Manchester and 
                     sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                     className="object-cover transition duration-700 ease-out group-hover:scale-[1.035]"
                   />
+                  {index === 0 && (
+                    <>
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/58 via-black/10 to-transparent md:hidden" />
+                      <div className="absolute bottom-4 left-4 border border-white/30 bg-black/55 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-white backdrop-blur md:hidden">
+                        Recent Work
+                      </div>
+                    </>
+                  )}
                   <div className="absolute inset-0 border border-black/0 transition group-hover:border-[#c92026]" />
                 </div>
               );
